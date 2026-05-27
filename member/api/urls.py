@@ -1,7 +1,8 @@
 from django.urls import path
-from member.api.views import memberlist
+from member.api.views import membercreate, memberlist
 
 
 urlpatterns = [
     path('',memberlist, name = "member-list"),
+    path('create', membercreate, name="member-create"),
 ]
