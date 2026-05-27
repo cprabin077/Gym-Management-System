@@ -2,6 +2,7 @@ from member.api.serializer import MemberSerializer
 from member.models import Member
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 
 @api_view(['GET'])
 def memberlist(request):
@@ -18,6 +19,6 @@ def membercreate(request):
         serializer.save()
         return Response({
             "message":"Member Successfully created"
-        },201)
+        },status.HTTP_201_CREATED)
     else:
-        return Response(serializer.errors,422)
+        return Response(serializer.errors,status.HTTP_422_UNPROCESSABLE_ENTITY)
