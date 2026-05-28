@@ -24,7 +24,6 @@ class TrainerAdmin(admin.ModelAdmin):
         'full_name',
         'email',
         'phone',
-        'specialization',
     )
 
     list_filter = (
@@ -45,7 +44,6 @@ class TrainerAdmin(admin.ModelAdmin):
                 'full_name',
                 'email',
                 'phone',
-                'specialization',
                 'experience_years',
                 'salary',
                 'joining_date',
