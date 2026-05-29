@@ -1,3 +1,5 @@
+from drf_spectacular.utils import extend_schema
+
 from member.api.serializer import MemberSerializer
 from member.models import Member
 from rest_framework.response import Response
@@ -5,6 +7,10 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 
 # Get member list
+@extend_schema(
+       responses= MemberSerializer,
+       tags=['Test']
+)
 @api_view(['GET'])
 def memberlist(request):
     member = Member.objects.all()
@@ -12,6 +18,10 @@ def memberlist(request):
     return Response(serializer.data)
 
 # Create member
+@extend_schema(
+       request= MemberSerializer,
+       responses= MemberSerializer 
+)
 @api_view(['POST'])
 def membercreate(request):
     post_data = request.data
@@ -25,6 +35,10 @@ def membercreate(request):
         return Response(serializer.errors,status.HTTP_422_UNPROCESSABLE_ENTITY)
     
 # Update member
+@extend_schema(
+       request= MemberSerializer,
+       responses= MemberSerializer 
+)
 @api_view(['PUT'])
 def memberupdate(request, id):
     member = Member.objects.get(id=id)
@@ -36,7 +50,10 @@ def memberupdate(request, id):
         },status.HTTP_200_OK)
     else:
         return Response(serializer.errors,status.HTTP_422_UNPROCESSABLE_ENTITY)
-    
+
+@extend_schema(
+       request= MemberSerializer
+)
 @api_view(['DELETE'])
 def memberdelete(request,id):
     member = Member.objects.filter(id=id)
