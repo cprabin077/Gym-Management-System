@@ -18,7 +18,7 @@ class TrainerView(GenericAPIView):
         serializer = TrainerSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Member Successfully created"}, 201)
+            return Response({"message": "Traner Successfully created"}, 201)
         else:
             return Response(serializer.errors, 422)
         
