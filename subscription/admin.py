@@ -46,6 +46,7 @@ class MembershipAdmin(admin.ModelAdmin):
         "days",
         "price",
         "created_at",
+
     )
 
     list_filter = (
@@ -54,8 +55,10 @@ class MembershipAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = (
+        "price",
         "created_at",
         "updated_at",
+        
     )
 
     ordering = ("-created_at",)

@@ -36,7 +36,7 @@ class Membership(models.Model):
     )
 
     days = models.PositiveIntegerField()
-    price = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

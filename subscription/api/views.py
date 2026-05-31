@@ -61,6 +61,15 @@ class MembershipView(GenericAPIView):
         data = Membership.objects.all()
         serializer = MembershipSerializer(data, many = True)
         return Response(serializer.data, 200)
+    
+    def post(self,request):
+        data = request.data
+        serializer = MembershipSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Memebership  Successfully created"}, 201)
+        else:
+            return Response(serializer.errors, 422)
         
 
         
