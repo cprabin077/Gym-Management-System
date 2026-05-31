@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Subscription
+from .models import Membership, Subscription
 
 
 @admin.register(Subscription)
@@ -35,3 +35,27 @@ class SubscriptionAdmin(admin.ModelAdmin):
         'created_at',
         'updated_at',
     )
+
+@admin.register(Membership)
+class MembershipAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "member",
+        "trainer",
+        "subscription",
+        "days",
+        "price",
+        "created_at",
+    )
+
+    list_filter = (
+        "trainer",
+        "created_at",
+    )
+
+    readonly_fields = (
+        "created_at",
+        "updated_at",
+    )
+
+    ordering = ("-created_at",)

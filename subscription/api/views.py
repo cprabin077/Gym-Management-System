@@ -1,8 +1,9 @@
+from drf_spectacular.utils import extend_schema
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
-from subscription.api.serializer import SubscriptionSerializer
-from subscription.models import Subscription
+from subscription.api.serializer import MembershipSerializer, SubscriptionSerializer
+from subscription.models import Membership, Subscription
 
 class SubscriptionView(GenericAPIView):
     queryset = Subscription.objects.all() 
@@ -45,6 +46,21 @@ class SubscriptionUpdateAndDelete(GenericAPIView):
         return Response({
             "message":"Subscription successfully deleted!!"
         },204)
+    
+
+@extend_schema(
+    request=MembershipSerializer,
+    responses=MembershipSerializer,
+    tags=["Membership"]
+)
+class MembershipView(GenericAPIView):
+    queryset = Membership.objects.all()
+    serializer_class = MembershipSerializer
+
+    def get(self, request):
+        data = Membership.objects.all()
+        serializer = MembershipSerializer(data, many = True)
+        return Response(serializer.data, 200)
         
 
         

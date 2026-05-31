@@ -41,7 +41,7 @@ class Membership(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.subscription
+        return f'{self.subscription}'
 
     class Meta:
         db_table = "membership"
