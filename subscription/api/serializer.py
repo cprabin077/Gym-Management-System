@@ -32,7 +32,7 @@ class MembershipSerializer(serializers.ModelSerializer):
 
         data['member'] = full_name
         data['subscription'] = instance.subscription.name
-        data['trainer'] = full_name
+        data['trainer'] = instance.trainer.full_name if instance.trainer else None
         return data
 
 
