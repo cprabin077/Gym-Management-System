@@ -1,12 +1,15 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 from trainer.api.serializer import TrainerSerializer
 from trainer.models import Trainer
 
+
 class TrainerView(GenericAPIView):
     queryset = Trainer.objects.all() 
     serializer_class = TrainerSerializer
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         trainer = Trainer.objects.all()
@@ -18,7 +21,7 @@ class TrainerView(GenericAPIView):
         serializer = TrainerSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"message": "Traner Successfully created"}, 201)
+            return Response({"message": "Trainer Successfully created"}, 201)
         else:
             return Response(serializer.errors, 422)
         
@@ -26,6 +29,7 @@ class TrainerView(GenericAPIView):
 class TrainerUpdateAndDelete(GenericAPIView):
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
+    permission_classes = [IsAuthenticated]
 
     def put(self,request,pk):
         trainer = Trainer.objects.get(id=pk)
