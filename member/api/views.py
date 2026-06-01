@@ -52,12 +52,19 @@ def memberupdate(request, id):
         return Response(serializer.errors,status.HTTP_422_UNPROCESSABLE_ENTITY)
 
 @extend_schema(
-       request= MemberSerializer
+    request=None,
+    responses={204: None}
 )
 @api_view(['DELETE'])
-def memberdelete(request,id):
+def memberdelete(request, id):
     member = Member.objects.filter(id=id)
-    member.delete()
-    return Response({
-        "message":"Member successfully deleted"
-    }, status.HTTP_204_NO_CONTENT)
+    if not member.exists():
+        return Response({
+            "message": "Member not found"
+            },status=status.HTTP_404_NOT_FOUND)
+    
+    else:
+        member.delete()
+        return Response({
+                "message": "Member successfully deleted"
+            },status=status.HTTP_204_NO_CONTENT)

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'trainer',
     'subscription',
     'attendance',
+    'user',
 ]
 
 # drf_spectacular
