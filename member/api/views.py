@@ -9,7 +9,7 @@ from rest_framework import status
 # Get member list
 @extend_schema(
        responses= MemberSerializer,
-       tags=['Test']
+    #    tags=['Test']
 )
 @api_view(['GET'])
 def memberlist(request):
