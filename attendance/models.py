@@ -14,3 +14,4 @@ class Attendance(models.Model):
     
     class Meta: 
         db_table = "attendance"
+        unique_together = ['member', 'attendance_date']
