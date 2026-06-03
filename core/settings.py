@@ -97,6 +97,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# Celery Configuration Options
+CELERY_TIMEZONE = "Asia/Kathmandu"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+
+# celery flower
+FLOWER_URL = "http://localhost:5555"
+FLOWER_URL_PREFIX = "flower"
+
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
@@ -133,7 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kathmandu'
 
 USE_I18N = True
 
