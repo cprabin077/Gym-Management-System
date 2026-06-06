@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
+
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     # 3rd party app
     'rest_framework',
     'drf_spectacular',
+    'django_celery_beat',
 
     # project app
     'member',
@@ -102,9 +106,22 @@ CELERY_TIMEZONE = "Asia/Kathmandu"
 CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
+# Default RabbitMQ URL
+CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"  
+
+
+# Celery beat schedule
+CELERY_BEAT_SCHEDULE = {
+    'add-today-attendance': {
+        'task':'attendance.tasks.add_attendance',
+        'schedule': timedelta(seconds=10),
+    }
+}
+
 # celery flower
 FLOWER_URL = "http://localhost:5555"
 FLOWER_URL_PREFIX = "flower"
+
 
 
 # Database

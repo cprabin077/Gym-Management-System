@@ -3,6 +3,7 @@ from rest_framework.response import Response
 
 from attendance.models import Attendance
 from attendance.api.serializer import AttendanceSerializer
+from attendance.tasks import add_attendance
 
 
 class AttendanceView(GenericAPIView):
@@ -11,6 +12,7 @@ class AttendanceView(GenericAPIView):
 
     def patch(self, request, *args, **kwargs):
         data = request.data
+        add_attendance.delay()
         attendance_data = Attendance.objects.get(id=kwargs["id"])
         serializer = AttendanceSerializer(
             attendance_data, data=data, context={"attendance_data": attendance_data, 'sunway':True}
