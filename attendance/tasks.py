@@ -17,7 +17,7 @@ def add_attendance():
         )
     return True
 
-
+@shared_task
 def mark_member_attendance():
     attendance = Attendance.objects.all()
     for i in attendance:

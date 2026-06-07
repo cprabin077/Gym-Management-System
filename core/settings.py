@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'trainer',
     'subscription',
     'attendance',
+    'transaction',
     'user',
 ]
 
@@ -112,9 +113,21 @@ CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"
 
 # Celery beat schedule
 CELERY_BEAT_SCHEDULE = {
-    'add-today-attendance': {
+    'add_today_attendance': {
         'task':'attendance.tasks.add_attendance',
-        'schedule': timedelta(seconds=10),
+        'schedule': crontab(
+            hour= 14,
+            minute= 45,
+            day_of_week= '0-5'
+        ),
+    },
+
+    'mark_attendance': {
+        'task' : crontab (
+            hour= 16,
+            minute=0,
+            day_of_week='0-5'
+        ),
     }
 }
 

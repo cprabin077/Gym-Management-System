@@ -1,0 +1,56 @@
+from rest_framework.generics import GenericAPIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+from trainer.api.serializer import TrainerSerializer
+from trainer.models import Trainer
+
+
+class TrainerView(GenericAPIView):
+    queryset = Trainer.objects.all() 
+    serializer_class = TrainerSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        trainer = Trainer.objects.all()
+        serializer = TrainerSerializer(trainer, many = True)
+        return Response(serializer.data, 200)
+    
+    def post(self, request):
+        data = request.data
+        serializer = TrainerSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Trainer Successfully created"}, 201)
+        else:
+            return Response(serializer.errors, 422)
+        
+        
+class TrainerUpdateAndDelete(GenericAPIView):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
+    permission_classes = [IsAuthenticated]
+
+    def put(self,request,pk):
+        trainer = Trainer.objects.get(id=pk)
+        data = request.data
+        serializer = TrainerSerializer(trainer, data =data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                "message":"Trainer successfully updated!!"
+            })
+        else:
+            return Response(serializer.errors,422)
+        
+    def delete(self, request,pk):
+        trainer = Trainer.objects.filter(id=pk)
+        trainer.delete()
+        return Response({
+            "message":"Trainer successfully deleted!!"
+        },204)
+        
+
+        
+
+
