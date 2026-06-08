@@ -117,17 +117,18 @@ CELERY_BEAT_SCHEDULE = {
     'add_today_attendance': {
         'task':'attendance.tasks.add_attendance',
         'schedule': crontab(
-            hour= 14,
-            minute= 45,
+            hour= 8,
+            minute= 30,
             day_of_week= '0-5'
         ),
     },
 
     'mark_attendance': {
-        'task' : crontab (
-            hour= 16,
+        'task':'attendance.tasks. mark_member_attendance',
+        'schedule':crontab(
+            hour=9,
             minute=0,
-            day_of_week='0-5'
+            day_of_week='0-5'  # Sunday to Friday
         ),
     }
 }

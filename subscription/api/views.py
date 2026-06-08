@@ -3,7 +3,10 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 
 from subscription.api.serializer import MembershipSerializer, SubscriptionSerializer
+from subscription.api.service import khalti_payment
 from subscription.models import Membership, Subscription
+from transaction.models import Status, Transaction
+from django.db import transaction
 
 class SubscriptionView(GenericAPIView):
     queryset = Subscription.objects.all() 
@@ -70,6 +73,27 @@ class MembershipView(GenericAPIView):
             return Response({"message": "Memebership  Successfully created"}, 201)
         else:
             return Response(serializer.errors, 422)
+        
+
+class MembershipPayment(GenericAPIView):
+    queryset = Membership.objects.all()
+    serializer_class = []
+
+    @transaction.atomic
+    def get(self,request,id):
+        data = Membership.objects.get(id=id)
+        txn = Transaction.objects.create(
+            member = data.member,
+            name = f'{data.member.first_name}-Upgrade',
+            amount = data.price
+        )
+        result = khalti_payment(data.member,txn)
+        if 'error' not in result:
+            txn.pidx = result['pidx']
+            txn.status = Status.KHALTI_PROCESS
+            txn.save()
+
+        return Response(result)
         
 
         

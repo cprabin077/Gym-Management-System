@@ -1,10 +1,9 @@
 from rest_framework import serializers
 
-from trainer.models import Trainer
+from transaction.models import Transaction
 
 
-class TrainerSerializer(serializers.ModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trainer
+        model = Transaction
         fields = '__all__'
-        read_only = ['is_active']

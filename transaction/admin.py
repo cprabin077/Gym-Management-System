@@ -1,14 +1,13 @@
 from django.contrib import admin
-
 from transaction.models import Transaction
 
-# Register your models here
+
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-
     list_display = (
         "id",
         "member",
+        "name",
         "amount",
         "status",
         "txn_id",
@@ -19,12 +18,14 @@ class TransactionAdmin(admin.ModelAdmin):
     list_filter = (
         "status",
         "created_at",
+        "updated_at",
     )
 
     search_fields = (
-        "member__name",
+        "name",
         "txn_id",
         "pidx",
+        "member__name",  # adjust if Member uses a different field
     )
 
     readonly_fields = (
@@ -33,3 +34,36 @@ class TransactionAdmin(admin.ModelAdmin):
     )
 
     ordering = ("-created_at",)
+
+    fieldsets = (
+        (
+            "Transaction Information",
+            {
+                "fields": (
+                    "member",
+                    "name",
+                    "amount",
+                    "status",
+                )
+            },
+        ),
+        (
+            "Payment Details",
+            {
+                "fields": (
+                    "txn_id",
+                    "pidx",
+                    "location",
+                )
+            },
+        ),
+        (
+            "Timestamps",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )

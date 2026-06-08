@@ -15,4 +15,5 @@ dependencies = [
     "flower>=2.0.1",
     "reddis>=1.0.1",
     "redis>=8.0.0",
+    "requests>=2.34.2",
 ]
