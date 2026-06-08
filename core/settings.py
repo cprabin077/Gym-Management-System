@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'subscription',
     'attendance',
     'transaction',
+    'exercise',
     'user',
 ]
 

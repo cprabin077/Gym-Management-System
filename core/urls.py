@@ -30,6 +30,7 @@ urlpatterns = [
     path('api/trainer/', include('trainer.api.urls')),
     path('api/subscription/', include('subscription.api.urls')),
     path('api/attendance/', include('attendance.api.urls')),
+    path('api/exercise/', include('exercise.api.urls')),
     path('api/user/', include('user.api.urls')),
 
     # YOUR PATTERNS
